@@ -21,6 +21,7 @@ TOKEN = "8089314049:AAGfgf61zq0TnBuWhBGpVvIH-3LNIOIeg-A"
 
 data = {'canvas':None, 'players':[]}
 
+app = Application.builder().token(TOKEN).build()
 
 async def yes(update: Update, context: CallbackContext):
     print('1111111111111')
@@ -71,9 +72,9 @@ async def ws_handler(websocket):
 def run_a():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    tgb_app = Application.builder().token(TOKEN).build()
-    tgb_app.add_handler(CommandHandler('yes', yes))
-    tgb_app.run_polling(poll_interval=0.0)
+    app = Application.builder().token(TOKEN).build()
+    app.add_handler(CommandHandler('yes', yes))
+    app.run_polling(poll_interval=0.0)
 
 
 async def run_b():
@@ -89,7 +90,6 @@ def bridge():
 
 
 if __name__ == '__main__':
-    tgb_app = Application.builder().token(TOKEN).build()
     print('fff')
     # Commands
     #app.add_handler(CommandHandler('yes', yes))
