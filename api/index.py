@@ -28,7 +28,7 @@ async def yes(update: Update, context: CallbackContext):
     await context.bot.sendMessage(chat_id=group_id, text='text')
 
 
-async def handler(websocket):
+async def ws_handler(websocket):
     async for message in websocket:
         message = eval(message)
         if message['tag'] == 'connected':
@@ -78,7 +78,7 @@ def run_a():
 
 async def run_b():
     print('b')
-    async with websockets.serve(handler, '192.168.0.162', 8080):
+    async with websockets.serve(ws_handler, '192.168.0.162', 8080):
         await asyncio.Future()
 
 
