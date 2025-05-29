@@ -14,7 +14,6 @@ import asyncio
 import websockets
 from multiprocessing import Process
 import json
-import ssl
 
 PORT = int(os.environ.get('PORT', 8443))
 
@@ -22,17 +21,15 @@ TOKEN = "8089314049:AAGfgf61zq0TnBuWhBGpVvIH-3LNIOIeg-A"
 
 data = {'canvas':None, 'players':[]}
 
-ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-ssl_context.load_cert_chain('server.crt', 'server.key')
 
 async def yes(update: Update, context: CallbackContext):
     print('1111111111111')
     group_id = update.message.chat.id
     await context.bot.sendMessage(chat_id=group_id, text='text')
 
+
 async def handler(websocket):
     async for message in websocket:
-        #print(message)
         message = eval(message)
         if message['tag'] == 'connected':
             data['players'].append(websocket)
@@ -71,14 +68,13 @@ async def handler(websocket):
                     print(len(data['players']),data['players'])
             
 
-
-
 def run_a():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     app = Application.builder().token(TOKEN).build()
     app.add_handler(CommandHandler('yes', yes))
     app.run_polling(poll_interval=0.0)
+
 
 async def run_b():
     print('b')
@@ -90,6 +86,7 @@ def bridge():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     loop.run_until_complete(run_b())
+
 
 if __name__ == '__main__':
     app = Application.builder().token(TOKEN).build()
