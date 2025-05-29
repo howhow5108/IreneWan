@@ -71,9 +71,9 @@ async def ws_handler(websocket):
 def run_a():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    app = Application.builder().token(TOKEN).build()
-    app.add_handler(CommandHandler('yes', yes))
-    app.run_polling(poll_interval=0.0)
+    tgb_app = Application.builder().token(TOKEN).build()
+    tgb_app.add_handler(CommandHandler('yes', yes))
+    tgb_app.run_polling(poll_interval=0.0)
 
 
 async def run_b():
@@ -89,7 +89,7 @@ def bridge():
 
 
 if __name__ == '__main__':
-    app = Application.builder().token(TOKEN).build()
+    tgb_app = Application.builder().token(TOKEN).build()
     print('fff')
     # Commands
     #app.add_handler(CommandHandler('yes', yes))
